@@ -1,0 +1,728 @@
+{% extends 'base.html' %}
+{% load static %}  <!-- This line was missing -->
+
+{% block title %}Login - e& Egypt Self-Service Portal{% endblock %}
+
+{% block extra_css %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+    }
+
+    body {
+        background: url("{% static 'images/smarthub-hero-banner-01.png' %}") no-repeat;
+        background-size: cover;
+        background-position: center;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Header Styles */
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: #f5f3f0;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .left-section {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .menu-icon {
+        font-size: 24px;
+        cursor: pointer;
+        color: #333;
+        transition: color 0.3s ease;
+    }
+
+    .menu-icon:hover {
+        color: #dc2626;
+    }
+
+    .logo img {
+        height: 40px;
+    }
+
+    .language {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #333;
+        transition: color 0.3s ease;
+    }
+
+    .language:hover {
+        color: #dc2626;
+    }
+
+    /* Main Content */
+    .main-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 20px;
+        flex: 1;
+    }
+
+    /* Login Form */
+    .wrapper {
+        width: 420px;
+        max-width: 90%;
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, .2);
+        backdrop-filter: blur(15px);
+        color: #fff;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
+        animation: slideUp 0.8s ease-out;
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .wrapper h1 {
+        font-size: 36px;
+        text-align: center;
+        margin-bottom: 30px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .input-box {
+        position: relative;
+        width: 100%;
+        height: 50px;
+        margin: 30px 0;
+    }
+
+    .input-box input {
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, .3);
+        border-radius: 40px;
+        font-size: 16px;
+        color: #fff;
+        padding: 20px 45px 20px 20px;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    .input-box input:focus {
+        border-color: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+
+    .input-box input::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .input-box i {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 20px;
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .remember-forgot {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14.5px;
+        margin: -15px 0 15px;
+    }
+
+    .remember-forgot label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+    }
+
+    .remember-forgot label input {
+        accent-color: #fff;
+        transform: scale(1.2);
+    }
+
+    .remember-forgot a {
+        color: #fff;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .remember-forgot a:hover {
+        text-decoration: underline;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    .btn {
+        width: 100%;
+        height: 50px;
+        background: linear-gradient(135deg, #fff, #f0f0f0);
+        border: none;
+        outline: none;
+        border-radius: 40px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, .2);
+        cursor: pointer;
+        font-size: 16px;
+        color: #333;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        transition: all 0.5s;
+    }
+
+    .btn:hover::before {
+        left: 100%;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, .3);
+    }
+
+    .btn:active {
+        transform: translateY(0);
+    }
+
+    .register-link {
+        font-size: 14.5px;
+        text-align: center;
+        margin: 20px 0 15px;
+    }
+
+    .register-link p a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .register-link p a:hover {
+        text-decoration: underline;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    .error-message {
+        background: rgba(220, 53, 69, 0.2);
+        border: 1px solid rgba(220, 53, 69, 0.5);
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 20px;
+        color: #fff;
+        font-size: 14px;
+        backdrop-filter: blur(10px);
+    }
+
+    .loading-spinner {
+        display: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid transparent;
+        border-top: 2px solid #333;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-right: 10px;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Footer Styles */
+    footer {
+        background-color: #e8e6e3;
+        padding: 40px 0 20px;
+        margin-top: auto;
+    }
+
+    .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .footer-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 30px;
+        gap: 40px;
+        flex-wrap: wrap;
+    }
+
+    .footer-logo-section {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .footer-logo {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .footer-logo-img {
+        width: 40px;
+        height: 40px;
+        background-color: #dc2626;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        margin-right: 10px;
+    }
+
+    .footer-company-name {
+        color: #333;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    .app-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+        flex-wrap: wrap;
+    }
+
+    .app-button {
+        display: inline-block;
+        padding: 8px 16px;
+        border: 2px solid #333;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #333;
+        font-size: 12px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .app-button:hover {
+        background-color: #333;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .footer-sections {
+        display: flex;
+        gap: 60px;
+        flex: 2;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .footer-section {
+        min-width: 150px;
+    }
+
+    .footer-section h3 {
+        color: #333;
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+    .footer-section ul {
+        list-style: none;
+    }
+
+    .footer-section ul li {
+        margin-bottom: 8px;
+    }
+
+    .footer-section ul li a {
+        color: #666;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.3s ease;
+    }
+
+    .footer-section ul li a:hover {
+        color: #dc2626;
+    }
+
+    .footer-bottom {
+        border-top: 1px solid #ccc;
+        padding-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .footer-legal {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        font-size: 12px;
+        color: #999;
+        flex-wrap: wrap;
+    }
+
+    .footer-legal a {
+        color: #666;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .footer-legal a:hover {
+        color: #dc2626;
+    }
+
+    .social-media {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .social-media span {
+        color: #999;
+        font-size: 12px;
+        margin-right: 10px;
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .social-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: white;
+        font-size: 14px;
+        transition: transform 0.3s ease;
+    }
+
+    .social-icon:hover {
+        transform: translateY(-2px);
+    }
+
+    .facebook { background-color: #1877f2; }
+    .twitter { background-color: #000; }
+    .linkedin { background-color: #0077b5; }
+    .youtube { background-color: #ff0000; }
+    .instagram { background-color: #e4405f; }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .wrapper {
+            width: 90%;
+            padding: 30px;
+        }
+
+        .wrapper h1 {
+            font-size: 28px;
+        }
+
+        .footer-top {
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .footer-sections {
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .footer-bottom {
+            flex-direction: column;
+            text-align: center;
+            gap: 15px;
+        }
+
+        .footer-legal {
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .app-buttons {
+            flex-wrap: wrap;
+        }
+
+        .main-content {
+            padding: 20px 10px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .wrapper {
+            padding: 20px;
+        }
+
+        .wrapper h1 {
+            font-size: 24px;
+        }
+
+        .input-box {
+            height: 45px;
+        }
+
+        .btn {
+            height: 45px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<header>
+    <div class="left-section">
+        <div class="menu-icon">&#9776;</div>
+        <div class="logo">
+            <img src="{% static 'images/etisalat_logo.svg' %}" alt="Etisalat Logo">
+        </div>
+    </div>
+    <div class="language">
+        🌐 Language
+    </div>
+</header>
+
+<div class="main-content">
+    <div class="wrapper">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if form.errors %}
+            <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        {{ error }}<br>
+                    {% endfor %}
+                {% endfor %}
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        {{ error }}<br>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <form method="post" id="loginForm">
+            {% csrf_token %}
+            <h1>Login</h1>
+            
+            <div class="input-box">
+                <input 
+                    type="text" 
+                    name="username" 
+                    id="id_username"
+                    placeholder="Username" 
+                    value="{{ form.username.value|default:'' }}"
+                    required
+                    autocomplete="username"
+                >
+                <i class="fas fa-user"></i>
+            </div>
+            
+            <div class="input-box">
+                <input 
+                    type="password" 
+                    name="password" 
+                    id="id_password"
+                    placeholder="Password" 
+                    required
+                    autocomplete="current-password"
+                >
+                <i class="fas fa-lock"></i>
+            </div>
+            
+            <div class="remember-forgot">
+                <label>
+                    <input type="checkbox" name="remember" id="remember">
+                    Remember Me
+                </label>
+                <a href="#">Forgot Password?</a>  <!-- Changed from {% url 'password_reset' %} -->
+            </div>
+            
+            <button type="submit" class="btn" id="loginBtn">
+                <span class="loading-spinner"></span>
+                Login
+            </button>
+            
+            <div class="register-link">
+                <p>Need an account? Contact your administrator.</p>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-top">
+            <div class="footer-logo-section">
+                <div class="footer-logo">
+                    <div class="footer-logo-img">e&</div>
+                    <span class="footer-company-name">etisalat and</span>
+                </div>
+                <div class="app-buttons">
+                    <a href="#" class="app-button">My e& Egypt App</a>
+                    <a href="#" class="app-button">📱 Google Play</a>
+                    <a href="#" class="app-button">📱 App Store</a>
+                </div>
+            </div>
+
+            <div class="footer-sections">
+                <div class="footer-section">
+                    <h3>Get To Know Us</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Rights & Duties</a></li>
+                        <li><a href="#">Contracts</a></li>
+                        <li><a href="#">Supplier's COC English</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Customer Care</h3>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Support Center</a></li>
+                        <li><a href="#">Store Locator</a></li>
+                        <li><a href="#">Coverage Map</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Mobile Services</a></li>
+                        <li><a href="#">Internet Services</a></li>
+                        <li><a href="#">Business Solutions</a></li>
+                        <li><a href="#">Digital Services</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-legal">
+                <span>Copyright © {% now "Y" %} e& misr company, All Rights Reserved</span>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms & Conditions</a>
+                <span>V 1.10.94</span>
+            </div>
+
+            <div class="social-media">
+                <span>Follow Us</span>
+                <div class="social-icons">
+                    <a href="#" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon twitter"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#" class="social-icon linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon youtube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-icon instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('loginForm');
+    const submitBtn = document.getElementById('loginBtn');
+    const spinner = submitBtn.querySelector('.loading-spinner');
+
+    form.addEventListener('submit', function(e) {
+        // Show loading state
+        submitBtn.disabled = true;
+        spinner.style.display = 'inline-block';
+        submitBtn.innerHTML = '<span class="loading-spinner"></span> Signing in...';
+        
+        // Re-enable button after 10 seconds to prevent permanent lock
+        setTimeout(function() {
+            if (submitBtn.disabled) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Login';
+                spinner.style.display = 'none';
+            }
+        }, 10000);
+    });
+
+    // Add focus effects to inputs
+    const inputs = document.querySelectorAll('.input-box input');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.style.transform = 'scale(1.02)';
+        });
+        
+        input.addEventListener('blur', function() {
+            this.parentElement.style.transform = 'scale(1)';
+        });
+    });
+
+    // Add click effect to social icons
+    const socialIcons = document.querySelectorAll('.social-icon');
+    socialIcons.forEach(icon => {
+        icon.addEventListener('click', function(e) {
+            e.preventDefault();
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = 'translateY(-2px)';
+            }, 150);
+        });
+    });
+});
+</script>
+{% endblock %}
