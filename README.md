@@ -1,4 +1,4 @@
-Self-Service Portal - e& Egypt
+
 A Django-based web application that provides e& Egypt employees with a self-service portal to manage AWS RDS database instances.
 Project Overview
 We're building an internal tool that streamlines database management for our development teams. Instead of going through lengthy approval processes, employees can now provision and manage RDS instances directly through this web interface.
