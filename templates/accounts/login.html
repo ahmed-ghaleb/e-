@@ -8,39 +8,41 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+  :root {
+    --red: #b30000;
+    --light-black: #2b2b2b;
   }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
 
   /* Use the base content container but remove padding/bg on this page */
-  .content-area { 
-    background: transparent !important; 
+  .content-area {
+    background: transparent !important;
     padding: 0 !important;
-    min-height: 100vh; 
   }
 
+  /* Full-viewport layout: header (auto), main (flex:1), footer (auto) */
   body {
-    background: url("{% static 'css/images/eandback.jpg' %}") no-repeat center center fixed;
-    background-size: cover;
-    min-height: 100vh;
+    min-height: 100vh;               /* fill viewport height */
     display: flex;
     flex-direction: column;
+    background: url("{% static 'css/images/eandback.jpg' %}") no-repeat center center fixed;
+    background-size: cover;
+    font-family: "Poppins", sans-serif;
   }
 
   body::before {
     content: "";
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* dark overlay */
+    background-color: rgba(0,0,0,0.5); /* dark overlay */
     z-index: -1;
   }
 
-  /* Login-specific header (matches base header gradient) */
+  /* Login header (same gradient as base) */
   .login-header {
-    background: linear-gradient(90deg, #b30000, #2b2b2b);
+    background: linear-gradient(90deg, var(--red), var(--light-black));
     color: #fff;
     padding: 12px 24px;
     display: flex;
@@ -49,55 +51,52 @@
     font-size: 18px;
     font-weight: 500;
   }
-
   .logo img { height: 40px; }
 
+  /* Center card between header and footer, no scroll */
   .main-content {
-    flex: 1;
+    flex: 1;                         /* occupy remaining height between header & footer */
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 40px 20px;
-    transform: translateY(80px);
+    align-items: center;             /* vertical center */
+    padding: 16px;                   /* small breathing room */
   }
 
   .wrapper {
     width: 100%;
     max-width: 400px;
-    padding: 40px 32px;
+    padding: 32px 28px;
     border-radius: 24px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255,255,255,0.1);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
     color: #fff;
-    animation: fadeIn 0.6s ease-out;
+    animation: fadeIn 0.45s ease-out;
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(40px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   .wrapper h1 {
     font-size: 32px;
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 22px;
     text-shadow: 0 2px 6px rgba(0,0,0,0.4);
   }
 
-  .input-box { position: relative; margin-bottom: 20px; }
-
+  .input-box { position: relative; margin-bottom: 16px; }
   .input-box input {
     width: 100%;
     padding: 14px 18px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255,255,255,0.2);
     border-radius: 30px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255,255,255,0.1);
     color: #fff;
     outline: none;
   }
-
   .input-box i {
     position: absolute;
     right: 20px;
@@ -105,9 +104,8 @@
     transform: translateY(-50%);
     color: rgba(255,255,255,0.7);
   }
-
   .input-box input::placeholder {
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255,255,255,0.75);
     text-shadow: 0 0 2px rgba(0,0,0,0.3);
   }
 
@@ -116,19 +114,13 @@
     justify-content: space-between;
     align-items: center;
     font-size: 14px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
-
   .remember-forgot label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    display: flex; align-items: center; gap: 6px;
   }
-
   .remember-forgot a {
-    color: #fff;
-    text-decoration: none;
-    opacity: 0.9;
+    color: #fff; text-decoration: none; opacity: 0.9;
   }
   .remember-forgot a:hover { opacity: 1; text-decoration: underline; }
 
@@ -137,44 +129,50 @@
     padding: 12px;
     border-radius: 30px;
     background: linear-gradient(90deg, #ffffff, #f3f3f3);
-    color: #b30000;  /* ties to header red */
+    color: var(--red);
     font-weight: 700;
     font-size: 16px;
     border: none;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
-
   .login-btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 15px rgba(255,255,255,0.4);
   }
 
   .register-link {
-    margin-top: 20px;
+    margin-top: 16px;
     text-align: center;
     font-size: 14px;
     color: #eee;
   }
 
   .error-message {
-    background: rgba(220, 53, 69, 0.2);
-    border: 1px solid rgba(220, 53, 69, 0.5);
+    background: rgba(220,53,69,0.2);
+    border: 1px solid rgba(220,53,69,0.5);
     border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 20px;
+    padding: 12px;
+    margin-bottom: 16px;
     color: #fff;
     font-size: 14px;
   }
 
-  /* Small login footer */
+  /* Compact footer so it always fits */
   .footer--login {
     background: transparent;
-    padding: 6px 0;
+    padding: 8px 0;
     text-align: center;
     font-size: 12px;
-    color: rgba(255,255,255,0.8);
-    margin-top: auto;
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* If the screen is short, shrink spacings so it still fits without scrolling */
+  @media (max-height: 760px) {
+    .wrapper { padding: 24px 22px; }
+    .wrapper h1 { font-size: 28px; margin-bottom: 16px; }
+    .input-box { margin-bottom: 14px; }
+    .remember-forgot { margin-bottom: 14px; }
   }
 
   @media (max-width: 480px) {
@@ -192,9 +190,8 @@
   <div>Self-Service Portal</div>
 </header>
 
-<div class="main-content">
+<main class="main-content">
   <div class="wrapper">
-
     {% for message in messages %}
       <div class="error-message">
         <i class="fas fa-exclamation-circle"></i> {{ message }}
@@ -206,7 +203,8 @@
       <h1>Login</h1>
 
       <div class="input-box">
-        <input type="text" name="username" placeholder="Username" value="{{ form.username.value|default:'' }}" required autofocus>
+        <input type="text" name="username" placeholder="Username"
+               value="{{ form.username.value|default:'' }}" required autofocus>
         <i class="fas fa-user" aria-hidden="true"></i>
       </div>
 
@@ -225,16 +223,15 @@
       <button type="submit" class="login-btn">Login</button>
 
       <div class="register-link">
-        Need an account?
-        Contact your administrator.
+        Need an account? Contact your administrator.
       </div>
     </form>
   </div>
-</div>
+</main>
 {% endblock %}
 
 {% block footer %}
 <footer class="footer--login">
-  &copy; {% now "Y" %} e& Egypt — Self-Service Portal
+  &copy; {% now "Y" %} e& Egypt<br>Self-Service Portal
 </footer>
 {% endblock %}

@@ -1,66 +1,104 @@
 # accounts/views.py
+from django import forms
 from django.contrib import messages
-from django.contrib.auth import views as auth_views
-from django.contrib.auth.forms import AuthenticationForm
-from django.shortcuts import redirect
+from django.contrib.auth import logout as django_logout
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
+from django.views import View
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 
+# ---------- Dummy credentials ----------
+DEMO_USERNAME = "admin"
+DEMO_PASSWORD = "pass"
 
-@method_decorator([sensitive_post_parameters(), csrf_protect, never_cache], name='dispatch')
-class LoginView(auth_views.LoginView):
+# Session key marking a dummy "logged-in" user
+SESSION_KEY = "dummy_user"
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)
+
+
+def _is_dummy_authenticated(request) -> bool:
+    return bool(request.session.get(SESSION_KEY))
+
+
+def _login_dummy(request, username: str) -> None:
+    request.session[SESSION_KEY] = username
+    # "Remember me" support (optional):
+    if request.POST.get("remember"):
+        request.session.set_expiry(60 * 60 * 24 * 30)  # 30 days
+    else:
+        request.session.set_expiry(0)  # expire on browser close
+
+
+def _logout_dummy(request) -> None:
+    request.session.pop(SESSION_KEY, None)
+
+
+@method_decorator([sensitive_post_parameters(), csrf_protect, never_cache], name="dispatch")
+class LoginView(View):
     """
-    Custom login view for e& Egypt employees.
-    Uses PRG (Post → Redirect → Get) on both success and failure so
-    error messages don't persist on refresh.
+    Dummy login that checks static credentials.
+    If already logged in via dummy session, redirect to dashboard.
     """
-    template_name = 'accounts/login.html'
-    form_class = AuthenticationForm
-    redirect_authenticated_user = True
-    success_url = reverse_lazy('core:dashboard')
+    template_name = "accounts/login.html"
+    success_url = reverse_lazy("dashboard")
 
-    def get_success_url(self):
-        return reverse_lazy('core:dashboard')
+    def get(self, request):
+        # If you want to ALWAYS show the form even when logged in, comment the next 3 lines.
+        if _is_dummy_authenticated(request):
+            return redirect(self.success_url)
+        return render(request, self.template_name, {"form": LoginForm()})
 
-    def form_valid(self, form):
-        # Successful login → message + redirect (handled by parent)
-        username = form.cleaned_data.get('username')
-        messages.success(
-            self.request,
-            f'Welcome back, {username}! You have successfully logged in to e& Egypt Self-Service Portal.'
-        )
-        return super().form_valid(form)
+    def post(self, request):
+        # If user somehow already logged in, just send them on.
+        if _is_dummy_authenticated(request):
+            return redirect(self.success_url)
 
-    def form_invalid(self, form):
-        """
-        Failed login → add a single message and redirect back to the login page
-        (PRG) so refresh won't resubmit the POST or re-show errors.
-        """
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+
+            if username == DEMO_USERNAME and password == DEMO_PASSWORD:
+                # Make sure any Django-auth session is cleared (e.g., from /admin)
+                django_logout(request)
+                _login_dummy(request, username)
+                messages.success(
+                    request,
+                    f"Welcome back, {username}! You have successfully logged in to e& Egypt Self-Service Portal."
+                )
+                return redirect(self.success_url)
+
         messages.error(
-            self.request,
-            'Invalid username or password. Please check your credentials and try again.'
+            request,
+            "Invalid username or password. Please check your credentials and try again."
         )
-        return redirect('accounts:login')  # PRG on failure
-
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return redirect('core:dashboard')
-        return super().dispatch(request, *args, **kwargs)
+        return redirect("accounts:login")
 
 
-class LogoutView(auth_views.LogoutView):
+@method_decorator([never_cache], name="dispatch")
+class LogoutView(View):
     """
-    Custom logout view.
+    Clears both dummy-session login and any Django-auth login.
+    Accepts GET for convenience while prototyping.
     """
-    next_page = reverse_lazy('accounts:login')
+    next_page = reverse_lazy("accounts:login")
 
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            messages.info(
-                request,
-                'You have been successfully logged out from e& Egypt Self-Service Portal.'
-            )
-        return super().dispatch(request, *args, **kwargs)
+    def get(self, request):
+        # Clear both auth mechanisms
+        _logout_dummy(request)
+        django_logout(request)
+        messages.info(request, "You have been logged out.")
+        return redirect(self.next_page)
+
+    def post(self, request):
+        _logout_dummy(request)
+        django_logout(request)
+        messages.info(request, "You have been logged out.")
+        return redirect(self.next_page)
