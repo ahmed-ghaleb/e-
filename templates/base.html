@@ -21,7 +21,7 @@
             box-sizing: border-box;
         }
 
-        body {
+        body.main-layout {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--etisalat-gray);
             min-height: 100vh;
@@ -316,7 +316,7 @@
     </style>
     {% block extra_css %}{% endblock %}
 </head>
-<body>
+<body class="{% block body_class %}main-layout{% endblock %}">
     <!-- Header -->
     <header class="header">
         <div class="header-content">
@@ -391,8 +391,7 @@
                 {% endfor %}
             {% endif %}
 
-            {% block content %}
-            {% endblock %}
+            {% block content %}{% endblock %}
         </main>
     </div>
 
