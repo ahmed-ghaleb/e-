@@ -15,11 +15,7 @@
             --etisalat-white: #ffffff;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body.main-layout {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -49,43 +45,13 @@
             padding: 0 2rem;
         }
 
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .logo-section img {
-            height: 40px;
-            width: auto;
-        }
-
-        .brand-text {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-        }
-
-        .user-section {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+        .user-section { display: flex; align-items: center; gap: 1rem; }
+        .user-info { display: flex; align-items: center; gap: 0.5rem; }
 
         .user-avatar {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
+            width: 35px; height: 35px; border-radius: 50%;
             background: rgba(255,255,255,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
         }
 
         .logout-btn {
@@ -97,20 +63,12 @@
             text-decoration: none;
             transition: all 0.3s ease;
         }
-
-        .logout-btn:hover {
-            background: rgba(255,255,255,0.3);
-            color: white;
-        }
+        .logout-btn:hover { background: rgba(255,255,255,0.3); color: white; }
 
         /* Main Layout */
-        .main-wrapper {
-            display: flex;
-            flex: 1;
-            min-height: calc(100vh - 120px);
-        }
+        .main-wrapper { display: flex; flex: 1; min-height: calc(100vh - 120px); }
 
-        /* Sidebar Styles */
+        /* Sidebar */
         .sidebar {
             width: 280px;
             background: var(--etisalat-dark);
@@ -120,19 +78,11 @@
             transition: all 0.3s ease;
         }
 
-        .sidebar-menu {
-            list-style: none;
-            padding: 0;
-        }
-
-        .sidebar-item {
-            margin: 0;
-        }
+        .sidebar-menu { list-style: none; padding: 0; }
+        .sidebar-item { margin: 0; }
 
         .sidebar-link {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+            display: flex; align-items: center; gap: 1rem;
             padding: 1rem 2rem;
             color: rgba(255,255,255,0.8);
             text-decoration: none;
@@ -147,31 +97,13 @@
             border-left-color: var(--etisalat-red);
         }
 
-        .sidebar-icon {
-            font-size: 1.2rem;
-            width: 20px;
-            text-align: center;
-        }
-
-        .sidebar-text {
-            font-weight: 500;
-        }
+        .sidebar-icon { font-size: 1.2rem; width: 20px; text-align: center; }
+        .sidebar-text { font-weight: 500; }
 
         /* Content Area */
-        .content-area {
-            flex: 1;
-            padding: 2rem;
-            background: var(--etisalat-gray);
-        }
+        .content-area { flex: 1; padding: 2rem; background: var(--etisalat-gray); }
 
-        .page-title {
-            color: var(--etisalat-dark);
-            margin-bottom: 2rem;
-            font-size: 2rem;
-            font-weight: 600;
-        }
-
-        /* Footer Styles */
+        /* Footer (default large) */
         .footer {
             background: var(--etisalat-dark);
             color: rgba(255,255,255,0.8);
@@ -180,11 +112,8 @@
         }
 
         .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
         }
 
@@ -200,10 +129,7 @@
             text-decoration: none;
             line-height: 1.6;
         }
-
-        .footer-section a:hover {
-            color: var(--etisalat-red);
-        }
+        .footer-section a:hover { color: var(--etisalat-red); }
 
         .footer-bottom {
             border-top: 1px solid rgba(255,255,255,0.1);
@@ -212,133 +138,65 @@
             text-align: center;
         }
 
-        /* Responsive Design */
+        /* Responsive */
         @media (max-width: 768px) {
-            .sidebar {
-                width: 70px;
-            }
-
-            .sidebar-text {
-                display: none;
-            }
-
-            .sidebar-link {
-                justify-content: center;
-                padding: 1rem;
-            }
-
-            .header-content {
-                padding: 0 1rem;
-            }
-
-            .content-area {
-                padding: 1rem;
-            }
+            .sidebar { width: 70px; }
+            .sidebar-text { display: none; }
+            .sidebar-link { justify-content: center; padding: 1rem; }
+            .header-content { padding: 0 1rem; }
+            .content-area { padding: 1rem; }
         }
 
         /* Cards */
         .card {
-            background: white;
-            border: none;
-            border-radius: 10px;
+            background: white; border: none; border-radius: 10px;
             box-shadow: 0 2px 15px rgba(0,0,0,0.08);
             transition: all 0.3s ease;
         }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 25px rgba(0,0,0,0.12);
-        }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 5px 25px rgba(0,0,0,0.12); }
 
         /* Buttons */
         .btn-etisalat {
-            background: var(--etisalat-red);
-            border: none;
-            color: white;
-            padding: 0.75rem 2rem;
-            border-radius: 5px;
-            font-weight: 500;
+            background: var(--etisalat-red); border: none; color: white;
+            padding: 0.75rem 2rem; border-radius: 5px; font-weight: 500;
             transition: all 0.3s ease;
         }
-
-        .btn-etisalat:hover {
-            background: var(--etisalat-claret);
-            color: white;
-            transform: translateY(-1px);
-        }
+        .btn-etisalat:hover { background: var(--etisalat-claret); color: white; transform: translateY(-1px); }
 
         .btn-outline-etisalat {
-            background: transparent;
-            border: 2px solid var(--etisalat-red);
-            color: var(--etisalat-red);
-            padding: 0.75rem 2rem;
-            border-radius: 5px;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            background: transparent; border: 2px solid var(--etisalat-red);
+            color: var(--etisalat-red); padding: 0.75rem 2rem; border-radius: 5px;
+            font-weight: 500; transition: all 0.3s ease;
         }
+        .btn-outline-etisalat:hover { background: var(--etisalat-red); color: white; }
 
-        .btn-outline-etisalat:hover {
-            background: var(--etisalat-red);
-            color: white;
-        }
-
-        /* Alert Messages */
-        .alert {
-            border: none;
-            border-radius: 8px;
-            padding: 1rem 1.5rem;
-        }
-
-        .alert-success {
-            background: rgba(40, 167, 69, 0.1);
-            color: #28a745;
-            border-left: 4px solid #28a745;
-        }
-
-        .alert-error,
-        .alert-danger {
-            background: rgba(220, 53, 69, 0.1);
-            color: #dc3545;
-            border-left: 4px solid #dc3545;
-        }
-
-        .alert-warning {
-            background: rgba(255, 193, 7, 0.1);
-            color: #ffc107;
-            border-left: 4px solid #ffc107;
-        }
-
-        .alert-info {
-            background: rgba(23, 162, 184, 0.1);
-            color: #17a2b8;
-            border-left: 4px solid #17a2b8;
-        }
+        /* Alerts */
+        .alert { border: none; border-radius: 8px; padding: 1rem 1.5rem; }
+        .alert-success { background: rgba(40,167,69,0.1); color: #28a745; border-left: 4px solid #28a745; }
+        .alert-error, .alert-danger { background: rgba(220,53,69,0.1); color: #dc3545; border-left: 4px solid #dc3545; }
+        .alert-warning { background: rgba(255,193,7,0.1); color: #ffc107; border-left: 4px solid #ffc107; }
+        .alert-info { background: rgba(23,162,184,0.1); color: #17a2b8; border-left: 4px solid #17a2b8; }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
 <body class="{% block body_class %}main-layout{% endblock %}">
+
+    {% if user.is_authenticated %}
     <!-- Header -->
     <header class="header">
         <div class="header-content">
-            <div class="logo-section">
-                <img src="/static/images/image1.png" alt="e& Egypt Logo">
-                <div class="brand-text">Self-Service Portal</div>
-            </div>
-            {% if user.is_authenticated %}
             <div class="user-section">
                 <div class="user-info">
-                    <div class="user-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
+                    <div class="user-avatar"><i class="fas fa-user"></i></div>
                     <span>{{ user.first_name|default:user.username }}</span>
                 </div>
                 <a href="{% url 'accounts:logout' %}" class="logout-btn">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
             </div>
-            {% endif %}
         </div>
     </header>
+    {% endif %}
 
     <!-- Main Content -->
     <div class="main-wrapper">
@@ -382,20 +240,12 @@
 
         <!-- Content Area -->
         <main class="content-area">
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                {% endfor %}
-            {% endif %}
-
             {% block content %}{% endblock %}
         </main>
     </div>
 
-    <!-- Footer -->
+    <!-- Footer (wrapped in a block so pages can override) -->
+    {% block footer %}
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
@@ -422,6 +272,7 @@
             <p>&copy; 2025 e& Egypt. All rights reserved. | Self-Service Portal v1.0</p>
         </div>
     </footer>
+    {% endblock %}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     {% block extra_js %}{% endblock %}

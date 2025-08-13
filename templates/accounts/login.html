@@ -2,248 +2,239 @@
 {% load static %}
 
 {% block title %}Login - e& Egypt Self-Service Portal{% endblock %}
-{% block body_class %}{% endblock %}  {# disables main-layout class #}
+{% block body_class %}{% endblock %}  {# disables main-layout class from base #}
 
 {% block extra_css %}
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Poppins", sans-serif;
-    }
-    
-    .content-area { 
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+
+  /* Use the base content container but remove padding/bg on this page */
+  .content-area { 
     background: transparent !important; 
     padding: 0 !important;
     min-height: 100vh; 
   }
 
-    body {
-        background: url("{% static 'C:\Users\aliyo\selfServicePortalEtisalat\static\css\images\eandback.jpg' %}") no-repeat center center fixed;
-        background-size: cover;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-    }
+  body {
+    background: url("{% static 'css/images/eandback.jpg' %}") no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 
-    body::before {
-        content: "";
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background-color: rgba(0, 0, 0, 0.5); /* optional dark overlay */
-        z-index: -1;
-    }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* dark overlay */
+    z-index: -1;
+  }
 
-    header {
-        background: linear-gradient(90deg, #b30000, #dc2626);
-        color: #fff;
-        padding: 12px 24px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 18px;
-        font-weight: 500;
-    }
+  /* Login-specific header (matches base header gradient) */
+  .login-header {
+    background: linear-gradient(90deg, #b30000, #2b2b2b);
+    color: #fff;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 500;
+  }
 
-    .logo img {
-        height: 40px;
-    }
+  .logo img { height: 40px; }
 
-    .main-content {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 40px 20px;
-    }
+  .main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    transform: translateY(80px);
+  }
 
-    .wrapper {
-        width: 100%;
-        max-width: 400px;
-        padding: 40px 32px;
-        border-radius: 24px;
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(18px);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-        color: #fff;
-        animation: fadeIn 0.6s ease-out;
-    }
+  .wrapper {
+    width: 100%;
+    max-width: 400px;
+    padding: 40px 32px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    animation: fadeIn 0.6s ease-out;
+  }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(40px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-    .wrapper h1 {
-        font-size: 32px;
-        text-align: center;
-        margin-bottom: 25px;
-        text-shadow: 0 2px 6px rgba(0,0,0,0.4);
-    }
+  .wrapper h1 {
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 25px;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  }
 
-    .input-box {
-        position: relative;
-        margin-bottom: 20px;
-    }
+  .input-box { position: relative; margin-bottom: 20px; }
 
-    .input-box input {
-        width: 100%;
-        padding: 14px 18px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 30px;
-        background: rgba(255, 255, 255, 0.1);
-        color: #fff;
-        outline: none;
-    }
+  .input-box input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    outline: none;
+  }
 
-    .input-box i {
-        position: absolute;
-        right: 20px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: rgba(255,255,255,0.7);
-    }
+  .input-box i {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.7);
+  }
 
-    .input-box input::placeholder {
-        color: rgba(255, 255, 255, 0.75);
-        text-shadow: 0 0 2px rgba(0,0,0,0.3);
-    }
+  .input-box input::placeholder {
+    color: rgba(255, 255, 255, 0.75);
+    text-shadow: 0 0 2px rgba(0,0,0,0.3);
+  }
 
-    .remember-forgot {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 14px;
-        margin-bottom: 20px;
-    }
+  .remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
 
-    .remember-forgot label {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
+  .remember-forgot label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
 
-    .remember-forgot a {
-        color: #fff;
-        text-decoration: none;
-    }
+  .remember-forgot a {
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.9;
+  }
+  .remember-forgot a:hover { opacity: 1; text-decoration: underline; }
 
-    .btn {
-        width: 100%;
-        padding: 12px;
-        border-radius: 30px;
-        background: linear-gradient(to right, #fff, #f3f3f3);
-        color: #dc2626;
-        font-weight: bold;
-        font-size: 16px;
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
+  .login-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 30px;
+    background: linear-gradient(90deg, #ffffff, #f3f3f3);
+    color: #b30000;  /* ties to header red */
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
 
-    .btn:hover {
-        transform: scale(1.03);
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
-    }
+  .login-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+  }
 
-    .register-link {
-        margin-top: 20px;
-        text-align: center;
-        font-size: 14px;
-        color: #eee;
-    }
+  .register-link {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #eee;
+  }
 
-    .error-message {
-        background: rgba(220, 53, 69, 0.2);
-        border: 1px solid rgba(220, 53, 69, 0.5);
-        border-radius: 10px;
-        padding: 15px;
-        margin-bottom: 20px;
-        color: #fff;
-        font-size: 14px;
-    }
+  .error-message {
+    background: rgba(220, 53, 69, 0.2);
+    border: 1px solid rgba(220, 53, 69, 0.5);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    color: #fff;
+    font-size: 14px;
+  }
 
-    footer {
-        background-color: #e8e6e3;
-        padding: 20px;
-        text-align: center;
-        font-size: 13px;
-        color: #555;
-    }
+  /* Small login footer */
+  .footer--login {
+    background: transparent;
+    padding: 6px 0;
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.8);
+    margin-top: auto;
+  }
 
-    @media (max-width: 480px) {
-        .wrapper h1 {
-            font-size: 24px;
-        }
-
-        .btn {
-            font-size: 14px;
-        }
-    }
+  @media (max-width: 480px) {
+    .wrapper h1 { font-size: 24px; }
+    .login-btn { font-size: 14px; }
+  }
 </style>
 {% endblock %}
 
 {% block content %}
-<header>
-    <div class="logo">
-        <img src="{% static 'css/images/Eand_Logo_EN.svg' %}" alt="e& Egypt Logo">
-    </div>
-    <div>Self-Service Portal</div>
+<header class="login-header">
+  <div class="logo">
+    <img src="{% static 'css/images/Eand_Logo_EN.svg' %}" alt="e& Egypt Logo">
+  </div>
+  <div>Self-Service Portal</div>
 </header>
 
 <div class="main-content">
-    <div class="wrapper">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="error-message">
-                    <i class="fas fa-exclamation-circle"></i> {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
+  <div class="wrapper">
 
-        {% if form.errors %}
-            <div class="error-message">
-                {% for field, errors in form.errors.items %}
-                    {% for error in errors %}{{ error }}<br>{% endfor %}
-                {% endfor %}
-                {% for error in form.non_field_errors %}{{ error }}<br>{% endfor %}
-            </div>
-        {% endif %}
+    {% for message in messages %}
+      <div class="error-message">
+        <i class="fas fa-exclamation-circle"></i> {{ message }}
+      </div>
+    {% endfor %}
 
-        <form method="post" id="loginForm">
-            {% csrf_token %}
-            <h1>Login</h1>
+    <form method="post" id="loginForm" autocomplete="on">
+      {% csrf_token %}
+      <h1>Login</h1>
 
-            <div class="input-box">
-                <input type="text" name="username" placeholder="Username" value="{{ form.username.value|default:'' }}" required>
-                <i class="fas fa-user"></i>
-            </div>
+      <div class="input-box">
+        <input type="text" name="username" placeholder="Username" value="{{ form.username.value|default:'' }}" required autofocus>
+        <i class="fas fa-user" aria-hidden="true"></i>
+      </div>
 
-            <div class="input-box">
-                <input type="password" name="password" placeholder="Password" required>
-                <i class="fas fa-lock"></i>
-            </div>
+      <div class="input-box">
+        <input type="password" name="password" placeholder="Password" required>
+        <i class="fas fa-lock" aria-hidden="true"></i>
+      </div>
 
-            <div class="remember-forgot">
-                <label>
-                    <input type="checkbox" name="remember"> Remember Me
-                </label>
-                <a href="#">Forgot Password?</a>
-            </div>
+      <div class="remember-forgot">
+        <label>
+          <input type="checkbox" name="remember"> Remember Me
+        </label>
+        <a href="#">Forgot Password?</a>
+      </div>
 
-            <button type="submit" class="btn">Login</button>
+      <button type="submit" class="login-btn">Login</button>
 
-            <div class="register-link">
-                Need an account? Contact your administrator.
-            </div>
-        </form>
-    </div>
+      <div class="register-link">
+        Need an account?
+        Contact your administrator.
+      </div>
+    </form>
+  </div>
 </div>
+{% endblock %}
 
-
+{% block footer %}
+<footer class="footer--login">
+  &copy; {% now "Y" %} e& Egypt — Self-Service Portal
+</footer>
 {% endblock %}
