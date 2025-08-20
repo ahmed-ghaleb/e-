@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("admin/", admin.site.urls),
 
-    # drop the namespace wrapper here 👇
+    # drop the namespace wrapper here 
     path("", include("core.urls")),
 ]
 

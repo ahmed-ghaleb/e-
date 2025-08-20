@@ -69,7 +69,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Authentication
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/accounts/login/'
+LOGOUT_REDIRECT_URL = '/accounts/logout/'
 
 # Security settings
 CSRF_COOKIE_SECURE = False  # Set to True in production with HTTPS
